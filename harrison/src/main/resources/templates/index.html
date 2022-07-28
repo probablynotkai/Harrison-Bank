@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Harrison's Bank | Home</title>
+	</head>
+	
+	<body>
+		<div id="container" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 250px;">
+			 <h2 style="font-size:28px; font-family:Helvetica">Bank Login</h2>
+			 
+			 <label for="username">Username:</label> <br />
+			 <input type="text" id="username" name="username" th:value="${user_name}" /> 
+			 <br /> <br />
+			 <label for="password">Password:</label> <br />
+			 <input type="text" id="password" name="password" th:value="${password}" />
+			 <br /> <br />
+			 <button type="submit" id="submit" onclick="window.location.href='/auth';">Log in</button>
+		</div>
+	</body>
+</html>

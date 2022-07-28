@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Harrison's Bank | Your Account</title>
+	</head>
+	
+	<body>
+		<style>
+			html,body{
+				font-family: Helvetica;
+			}
+		
+			#header_container {
+				position: absolute;
+				padding: 20px 0 7.5px 0;
+				float: left;
+				left: 0;
+				right: 0;
+				top: 0;
+				width: 100%;
+				background-color: #e3e3e3;
+				text-align: center;
+			}
+			
+			#transaction_container {
+				display: flex;
+				position: relative;
+				padding: 10px;
+				margin: 0 auto;
+				top: 320px;
+				width: 50%;
+				justify-content: center;
+				flex-direction: column;
+			}
+		</style>
+	
+		<div id="header_container">
+			<h2 style="font-size: 32px;font-family: Helvetica;">Harrison's Bank</h2>
+			<h3>Welcome back, <span th:utext="${header_placeholder}" style="color: #406295;">user</span>.</h3>
+			<br />
+			<h3>Your account</h3>
+			<p><b>Available balance:</b> $<span th:utext="${available_balance}">0</span><br />
+			<b>Account type:</b> <span th:utext="${account_type}">None</span><br />
+			<b>Interest rate:</b> <span th:utext="${interest_rate}">0.0</span>%</p>
+		</div>
+		
+		<div id="transaction_container">
+			<label for="transactions" style="font-size: 32px">Your recent activity</label>
+			<br /> <br />
+			<table id="transactions">
+				<tr>
+					<td><b>Recipient</b></td>
+					<td><b>Amount</b></td>
+					<td><b>Date</b></td>
+				</tr>
+				<tr>
+					<td th:utext="${row1_recipient}"></td>
+					<td th:utext="${row1_amount}"></td>
+					<td th:utext="${row1_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row2_recipient}"></td>
+					<td th:utext="${row2_amount}"></td>
+					<td th:utext="${row2_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row3_recipient}"></td>
+					<td th:utext="${row3_amount}"></td>
+					<td th:utext="${row3_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row4_recipient}"></td>
+					<td th:utext="${row4_amount}"></td>
+					<td th:utext="${row4_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row5_recipient}"></td>
+					<td th:utext="${row5_amount}"></td>
+					<td th:utext="${row5_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row6_recipient}"></td>
+					<td th:utext="${row6_amount}"></td>
+					<td th:utext="${row6_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row7_recipient}"></td>
+					<td th:utext="${row7_amount}"></td>
+					<td th:utext="${row7_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row8_recipient}"></td>
+					<td th:utext="${row8_amount}"></td>
+					<td th:utext="${row8_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row9_recipient}"></td>
+					<td th:utext="${row9_amount}"></td>
+					<td th:utext="${row9_date}"></td>
+				</tr>
+				<tr>
+					<td th:utext="${row10_recipient}"></td>
+					<td th:utext="${row10_amount}"></td>
+					<td th:utext="${row10_date}"></td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
