@@ -16,6 +16,11 @@ public class TransactionController
         this.transactionService = transactionService;
     }
 
+    @GetMapping("/get")
+    public Transaction getTransaction(@RequestParam(value = "transactionId") final String transactionId){
+        return transactionService.getTransaction(transactionId);
+    }
+
     @PostMapping("/update")
     public void updateTransaction(@RequestParam(value = "transactionId", defaultValue = "-1") final String transactionId,
                                           @RequestParam(value = "amount") final String amount){
@@ -30,8 +35,9 @@ public class TransactionController
     }
 
     @PutMapping("/create")
-    public void addTransaction(@RequestBody Transaction transaction){
+    public Transaction addTransaction(@RequestBody Transaction transaction){
         transactionService.addTransaction(transaction);
+        return transaction;
     }
 
     @DeleteMapping("/delete")

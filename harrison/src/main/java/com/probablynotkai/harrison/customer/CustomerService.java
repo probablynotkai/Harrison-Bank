@@ -1,12 +1,16 @@
 package com.probablynotkai.harrison.customer;
 
+import com.probablynotkai.harrison.transaction.Transaction;
+import com.probablynotkai.harrison.transaction.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,10 +18,12 @@ import java.util.Optional;
 public class CustomerService
 {
     private final CustomerRepository customerRepository;
+    private final TransactionService transactionService;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository){
+    public CustomerService(CustomerRepository customerRepository, TransactionService transactionService){
         this.customerRepository = customerRepository;
+        this.transactionService = transactionService;
     }
 
     @Nullable
@@ -29,6 +35,7 @@ public class CustomerService
         return customer.get();
     }
 
+    //TODO Ensure that transactions are included in model and view
     public ModelAndView getModelAndView(Customer customer) {
         if (customer == null){
             return getNoCustomerModelAndView();
@@ -39,6 +46,23 @@ public class CustomerService
         model.put("available_balance", String.valueOf(customer.getAvailableBalance()));
         model.put("account_type", customer.getAccountType().normalize());
         model.put("interest_rate", String.valueOf(customer.getInterestRate()));
+
+        List<Transaction> transactions = transactionService.getTransactions(customer.getAccountId());
+        if (!transactions.isEmpty()){
+            Transaction[] recentTransactions = transactions.toArray(new Transaction[10]);
+
+            for (int i = 0; i < recentTransactions.length-1; i++){
+                Transaction currentTransaction = recentTransactions[i];
+
+                if (currentTransaction == null) continue;
+
+                model.put("row" + i+1 + "_recipient", String.valueOf(currentTransaction.getRecipientId()));
+                model.put("row" + i+1 + "_amount", String.valueOf(currentTransaction.getAmountTransferred()));
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                model.put("row" + i+1 + "_date", currentTransaction.getDate().format(formatter));
+            }
+        }
 
         return new ModelAndView("account", model);
     }

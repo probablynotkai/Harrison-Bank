@@ -5,6 +5,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +17,10 @@ public class TransactionService
     @Autowired
     public TransactionService(TransactionRepository transactionRepository){
         this.transactionRepository = transactionRepository;
+    }
+
+    public List<Transaction> getTransactions(Long senderId){
+        return transactionRepository.findTransactionsBySenderId(senderId).orElse(new ArrayList<>());
     }
 
     public Transaction getTransaction(Long transactionId){
