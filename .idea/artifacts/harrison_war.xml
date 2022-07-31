@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="harrison:war">
+    <output-path>$PROJECT_DIR$/harrison/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>harrison</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="harrison-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="harrison:war exploded" />
+    </root>
+  </artifact>
+</component>

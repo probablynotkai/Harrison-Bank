@@ -9,10 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CustomerService
@@ -35,7 +32,6 @@ public class CustomerService
         return customer.get();
     }
 
-    //TODO Ensure that transactions are included in model and view
     public ModelAndView getModelAndView(Customer customer) {
         if (customer == null){
             return getNoCustomerModelAndView();
@@ -56,11 +52,16 @@ public class CustomerService
 
                 if (currentTransaction == null) continue;
 
-                model.put("row" + i+1 + "_recipient", String.valueOf(currentTransaction.getRecipientId()));
-                model.put("row" + i+1 + "_amount", String.valueOf(currentTransaction.getAmountTransferred()));
+                Customer recipient = customerRepository.findCustomerByAccountId(currentTransaction.getRecipientId())
+                        .orElseThrow(() -> new IllegalStateException("An unknown error has occurred."));
+                model.put("row" + (i+1) + "_recipient", recipient.getName());
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                model.put("row" + i+1 + "_date", currentTransaction.getDate().format(formatter));
+                Formatter doubleFormatter = new Formatter();
+                doubleFormatter.format("%.2f", currentTransaction.getAmountTransferred());
+                model.put("row" + (i+1) + "_amount", "£" + doubleFormatter);
+
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                model.put("row" + (i+1) + "_date", currentTransaction.getDate().format(dateFormatter));
             }
         }
 
