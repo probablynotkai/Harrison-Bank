@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 public class LoginService
 {
     public boolean validateLoginForm(LoginForm loginForm){
-        return false;
+        return true;
     }
 }

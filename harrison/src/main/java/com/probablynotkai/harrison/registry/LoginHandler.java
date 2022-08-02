@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginHandler
 {
-    private LoginService loginService;
+    private final LoginService loginService;
 
     private static final String LOGIN_VIEW = "login";
 
@@ -21,29 +21,21 @@ public class LoginHandler
     }
 
     @GetMapping("/login")
-    public String getLoginForm(@ModelAttribute("loginform") LoginForm loginForm){
+    public String getLoginForm(Model model){
+        model.addAttribute("loginform", new LoginForm());
         return LOGIN_VIEW;
     }
 
-    @PostMapping("/login")
-    public String submitLoginForm(@ModelAttribute("loginform") LoginForm loginForm, RedirectAttributes ra){
-        ra.addFlashAttribute("currentUser", loginForm);
-        return "redirect:/validate";
+    @PostMapping("/validate")
+    public String submitLoginForm(@ModelAttribute("loginform") LoginForm loginForm, Model model){
+        if (loginService.validateLoginForm(loginForm)){
+            return "redirect:/customer/accounts?name=" + loginForm.getUsername() + "&surname=" + loginForm.getPassword();
+        }
+        return "redirect:/login";
     }
 
     @GetMapping("/validate")
-    public String getValidatePage(){
-        return "account";
-    }
-
-    @PostMapping("/validate")
-    public String validateLoginForm(@ModelAttribute("loginform") LoginForm loginForm){
-        // TODO: finish form validation
-        return "null";
-    }
-
-    @ModelAttribute
-    public void addAttributes(Model model){
-        model.addAttribute("loginform", new LoginForm());
+    public String returnValidatePage(){
+        return "redirect:/login";
     }
 }

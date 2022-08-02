@@ -1,7 +1,6 @@
 package com.probablynotkai.harrison.customer;
 
 import com.probablynotkai.harrison.account.AccountType;
-import com.probablynotkai.harrison.registry.user.User;
 
 import javax.persistence.*;
 
@@ -19,8 +18,6 @@ public class Customer
             strategy = GenerationType.SEQUENCE,
             generator = "customer_sequence"
     )
-    @OneToOne(mappedBy = "customer")
-    @JoinColumn(name = "account_id")
     private long accountId;
     private AccountType accountType;
     private double availableBalance;

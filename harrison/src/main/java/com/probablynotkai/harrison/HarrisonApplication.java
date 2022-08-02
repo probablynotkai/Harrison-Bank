@@ -23,8 +23,8 @@ public class HarrisonApplication {
 	}
 
 	@GetMapping
-	public ModelAndView home(){
-		return new ModelAndView("login");
+	public String home(){
+		return "redirect:/login";
 	}
 
 
