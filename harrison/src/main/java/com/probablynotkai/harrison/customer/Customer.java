@@ -9,10 +9,12 @@ public class Customer
 {
     private String name;
     private String email;
+    private String password;
     @Id
     @SequenceGenerator(
             name = "customer_sequence",
-            sequenceName = "customer_sequence"
+            sequenceName = "customer_sequence",
+            allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -22,10 +24,11 @@ public class Customer
     private AccountType accountType;
     private double availableBalance;
     private double interestRate;
-    public Customer(long accountId, String name, String email, AccountType accountType, int availableBalance, double interestRate){
+    public Customer(long accountId, String name, String email, String password, AccountType accountType, int availableBalance, double interestRate){
         this.accountId = accountId;
         this.name = name;
         this.email = email;
+        this.password = password;
         this.accountType = accountType;
         this.availableBalance = availableBalance;
         this.interestRate = interestRate;
@@ -92,5 +95,13 @@ public class Customer
                 ", availableBalance=" + availableBalance +
                 ", interestRate=" + interestRate +
                 '}';
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

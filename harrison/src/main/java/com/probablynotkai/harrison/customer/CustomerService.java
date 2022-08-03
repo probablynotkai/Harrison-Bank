@@ -83,11 +83,24 @@ public class CustomerService
         }
     }
 
+    public Customer getCustomerByEmail(String email){
+        Optional<Customer> optionalCustomer = customerRepository.findCustomerByEmail(email);
+        if (optionalCustomer.isEmpty()){
+            throw new IllegalStateException("This customer doesn't exist.");
+        }
+        return optionalCustomer.get();
+    }
+
     public void addNewCustomer(Customer customer){
-        Optional<Customer> optionalCustomer = customerRepository.findCustomerByAccountId(customer.getAccountId()); // Check if customer exists
-        if (optionalCustomer.isPresent()){
+        Optional<Customer> idCustomer = customerRepository.findCustomerByAccountId(customer.getAccountId()); // Check if customer exists
+        Optional<Customer> emailCustomer = customerRepository.findCustomerByEmail(customer.getEmail()); // Check if customer exists
+        if (idCustomer.isPresent()){
             throw new IllegalStateException("That customer already exists.");
         }
+        if (emailCustomer.isPresent()){
+            throw new IllegalStateException("That customer already exists.");
+        }
+
         customerRepository.save(customer); // Customer possesses the @Entity annotation which allows it to be saved by the JPA
     }
 }

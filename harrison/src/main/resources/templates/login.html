@@ -3,18 +3,30 @@
 <html>
 	<head>
 		<title>Harrison's Bank | Home</title>
+		<style>
+			body {
+				font-family: Helvetica;
+			}
+			
+			#container {
+				text-align: center;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 10%;
+			}
+		</style>
 	</head>
 	
 	<body>
-		<div id="container" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 250px;">
+		<div id="container">
 			<h2 style="font-size:28px; font-family:Helvetica">Bank Login</h2>
 
-			<form th:action="@{/validate}" th:object="${loginform}" method="post"> <!-- The Object attribute should be a POJO class with no business logic -->
-				<label for="username">Username:</label> <br />
-				<input type="text" id="username" th:field="*{username}" placeholder="Username" />
+			<form th:action="@{/customer/validate}" th:object="${loginform}" method="post"> <!-- The Object attribute should be a POJO class with no business logic -->
+				<label for="email">Email:</label> <br />
+				<input type="text" id="email" th:field="*{email}" placeholder="Email" />
 				<br /> <br />
 				<label for="password">Password:</label> <br />
-				<input type="text" id="password" th:field="*{password}" placeholder="Password" />
+				<input type="password" id="password" th:field="*{password}" placeholder="Password" />
 				<br /> <br />
 				<button type="submit" id="submit">Log in</button>
 			</form>
